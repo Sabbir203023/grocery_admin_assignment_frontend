@@ -47,9 +47,7 @@ export default function NavBar() {
             <AddProductModel isUpdate={false} handleCloseModal={handleCloseModal} />
         </Modal>
 
-        <div style={{ padding: 20 }}>
-            <ProductTable />
-        </div>
+   
 
     </>;
 }
