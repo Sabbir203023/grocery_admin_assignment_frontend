@@ -45,6 +45,28 @@ export default function ProductTable() {
         setOpenModal(false);
     };
 
+    const handleDeleteProduct = (id: number): void => {
+        const userConfirmed = window.confirm('Are you sure you want to delete this product?');
+    
+        if (userConfirmed) {
+            fetch(`http://localhost:3001/products/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then((response: Response) => {
+                if (response.ok) {
+                    alert('Product deleted successfully');
+                    window.location.reload();
+                } else {
+                    console.error('Failed to delete product');
+                }
+            })
+            .catch((error: Error) => console.error('Error deleting product:', error));
+        }
+    };
+    
 
     return (
       <>
@@ -71,8 +93,11 @@ export default function ProductTable() {
                             <TableCell align="right">{product.price}</TableCell>
                             <TableCell align="right">{product.stock_quantity}</TableCell>
                             <TableCell align="right"><IconButton onClick={handleUpdateProductClick.bind(null, product)}><EditIcon /></IconButton></TableCell>
-                            <TableCell align="right"> <IconButton><DeleteIcon /></IconButton></TableCell>
-                            
+                            <TableCell align="right">
+                                    <IconButton onClick={() => handleDeleteProduct(product.id!)}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </TableCell>                            
                         </TableRow>
                     ))}
                 </TableBody>
